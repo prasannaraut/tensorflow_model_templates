@@ -28,7 +28,7 @@ columns_to_drop = ["Name","Phone_Number","Date_Of_Birth"]
 
 
 ################# Read data as pandas dataframe ############################
-df=pd.read_csv('salary_dataset.csv') #https://github.com/oluwole-packt/datasets/blob/main/salary_dataset.csv
+df=pd.read_csv('datasets/salary_dataset.csv') #https://github.com/oluwole-packt/datasets/blob/main/salary_dataset.csv
 cols = df.columns
 print("All numeric columns are: {}".format(list(df.select_dtypes(include="number").columns)))
 print("All categorical columns are: {}".format(list(df.select_dtypes(include="object").columns)))

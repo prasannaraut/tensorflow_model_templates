@@ -42,7 +42,20 @@ print(df.info())
 
 ################### Data Preprocessing #########################################
 # Create new columns as required
-df['Year_of_Birth'] = pd.DatetimeIndex(df['Date_Of_Birth']).year
+#df['Year_of_Birth'] = pd.DatetimeIndex(df['Date_Of_Birth']).year
+
+# Impute the data as required
+# Imputing for numeric columns
+for col in df.select_dtypes(include="number").columns:
+    val = df[col].median()
+    #val =df[col].mean()
+    df[col].fillna(val, inplace=True)
+
+# Imputing for categorical columns
+for col in df.select_dtypes(include="object").columns:
+    val = df[col].mode()
+    df[col].fillna(val, inplace=True)
+
 
 #drop columns that are not required
 df.drop(columns_to_drop,inplace=True, axis=1)

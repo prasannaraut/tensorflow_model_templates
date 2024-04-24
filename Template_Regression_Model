@@ -19,7 +19,7 @@ from sklearn.compose import make_column_selector
 import sklearn
 
 
-
+pd.set_option('display.max_columns', 500)
 
 ############################## Variables ####################################
 output_column = ["Salary"]

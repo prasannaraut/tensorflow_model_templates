@@ -320,3 +320,7 @@ plt.figure()
 plt.plot(test_labels_array)
 plt.plot(y_pred)
 plt.show()
+
+
+########################################## Save the model ######################################################
+# model.save("model_name.keras")

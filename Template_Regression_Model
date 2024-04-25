@@ -297,6 +297,15 @@ for var in variables_for_plot:
     plt.legend()
     plt.show()
 
+####################################################### Evaluate Model #######################################
+def eval_model(model):
+    return model.evaluate(test_inputs_array, test_labels_array)
+
+all_models = [model]
+for m in all_models:
+    eval_model(m)
+
+
 
 ############################################ Post Process the data ############################################
 

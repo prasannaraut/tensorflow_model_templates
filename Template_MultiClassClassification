@@ -268,7 +268,7 @@ model.add(tf.keras.layers.Dense(1))
 '''
 
 ###################################### Prepare Tensorflow Model ####################################################
-model_binaryClassification = tf.keras.Sequential([
+model_multiClassClassification = tf.keras.Sequential([
     #tf.keras.layers.Dense(21, activation='relu', input_shape=(13,)),
     tf.keras.layers.BatchNormalization(),
     tf.keras.layers.Dense(32, activation='relu'),
@@ -281,7 +281,8 @@ model_binaryClassification = tf.keras.Sequential([
 ])
 
 
-model = model_binaryClassification
+
+model = model_multiClassClassification
 
 initial_learning_rate = 0.1
 lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(

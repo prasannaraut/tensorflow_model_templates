@@ -19,6 +19,15 @@
 #   loading pre-trained CNN models - in next Template of transfer learning
 #   fine tunning with early stopping and learning rate scheduler - done
 
+# how to reduce overfitting
+#   reduce number of epochs, use callbacks to stop training early, basically track training accuracy and validation accuracy both should be similar
+#   use simple models, big and complex models capture the noise from input data
+#   use L1(lasso regression) or L2 regularization, L1 will cause some of the coefficient to become 0, the penalty term L2 reduces the magnitude of coefficient preventing them from becoming too large
+#       tf.keras.layers.Dense(1050, activation="relu", kernel_regularizer=regularizers.l2(0.01))
+#   use dropouts
+#   adjust learning rate
+#   perform error analysis, check the cases where model misclassifid information
+#   use data augmentation
 
 
 
@@ -189,6 +198,33 @@ ax.imshow(modified_image_rand, cmap='gray')
 ax.set_title("Random Modified Image")
 
 figure.show()
+
+################################## Image resizing
+
+n=10
+
+original_image = x_train[n].reshape(28, 28,1)
+
+figure = plt.figure(figsize=(12,12))
+ax = figure.add_subplot(2,2, 1, xticks=[], yticks=[])
+ax.imshow(original_image, cmap='gray')
+ax.set_title("Original Image Before Resizing")
+
+x_train_reshaped = tf.keras.preprocessing.image.smart_resize(
+    x_train,
+    (64,64),
+    interpolation='bilinear',
+    data_format='channels_last',
+    backend_module=None
+)
+
+resized_image = x_train_reshaped[n]
+
+ax = figure.add_subplot(2,2, 2, xticks=[], yticks=[])
+ax.imshow(resized_image, cmap='gray')
+ax.set_title("Resized Image")
+figure.show()
+
 
 
 ################################################################# Build Sequencial model

@@ -167,11 +167,11 @@ lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
     decay_rate=0.96,
     staircase=True)
 
-optimizer=tf.keras.optimizers.Adam(learning_rate = 0.0001)
+optimizer=tf.keras.optimizers.Adam(learning_rate = 0.001)
 #optimizer=tf.keras.optimizers.SGD(learning_rate=0.001, momentum=0.0)
 
-#loss_model = "binary_crossentropy"
-loss_model = 'categorical_crossentropy'
+loss_model = "binary_crossentropy"
+#loss_model = 'categorical_crossentropy'
 #loss_model = 'mean_absolute_error'
 
 metrics_to_be_used = ["accuracy"]

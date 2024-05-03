@@ -275,7 +275,8 @@ model_multiLabelClassification_LSTM = tf.keras.Sequential([
 model_multiLabelClassification_Dense = tf.keras.Sequential([
     #tf.keras.layers.Dense(21, activation='relu', input_shape=(13,)),
     #tf.keras.layers.BatchNormalization(),
-    #tf.keras.layers.Embedding(1000,64),
+    tf.keras.layers.Embedding(vocab_size, embedding_dim_title+embedding_dim_abstract, input_length = max_length_title+max_length_abstract),
+    tf.keras.layers.GlobalAveragePooling1D(),
     tf.keras.layers.Dense(50, activation='relu'),
     #tf.keras.layers.LSTM(15),
     tf.keras.layers.Dropout(0.3),

@@ -158,7 +158,7 @@ model = imported_newModel
 #model=model_CNN_scratch
 
 
-print(model.summary())
+
 
 initial_learning_rate = 0.1
 lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
@@ -177,7 +177,7 @@ loss_model = "binary_crossentropy"
 metrics_to_be_used = ["accuracy"]
 
 model.compile(optimizer=optimizer,loss=loss_model, metrics=metrics_to_be_used)
-model.summary()
+
 
 from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
@@ -195,7 +195,7 @@ history = model.fit(x=train_data,
                     shuffle = True,
                     callbacks=[reduce_lr,EarlyStoppingMonitory])
 
-
+print(model.summary())
 
 variables_for_plot = ["loss"] + metrics_to_be_used
 

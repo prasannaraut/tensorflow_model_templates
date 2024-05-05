@@ -656,7 +656,7 @@ embedding_model = tf.keras.Sequential([
     tf.keras.layers.Dense(1)
 ])
 
-print(embedding_model.summary())
+
 
 train_data = np.array(padded_train_sequence_words)
 
@@ -664,6 +664,8 @@ metrics_to_be_used = ['accuracy']
 
 embedding_model.compile(loss='mse',optimizer='adam', metrics=metrics_to_be_used)
 history = embedding_model.fit(train_data, train_data, epochs=num_epochs, validation_split=0.2,)
+
+print(embedding_model.summary())
 
 variables_for_plot = ["loss"] + metrics_to_be_used
 

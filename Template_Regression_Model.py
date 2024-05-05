@@ -269,7 +269,7 @@ loss_model = "mean_absolute_percentage_error"
 metrics_to_be_used = ["accuracy","r2_score"]
 
 model.compile(optimizer=optimizer,loss=loss_model, metrics=metrics_to_be_used)
-model.summary()
+
 
 from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
@@ -280,6 +280,8 @@ history = model.fit(x=train_inputs_array,y=train_labels_array,
                     epochs = 500,
                     shuffle = True,
                     callbacks=[reduce_lr])
+
+model.summary()
 
 variables_for_plot = ["loss"] + metrics_to_be_used
 

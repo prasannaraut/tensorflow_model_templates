@@ -237,7 +237,6 @@ model = tf.keras.models.Sequential([
 ])
 
 
-print(model.summary())
 
 initial_learning_rate = 0.1
 lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
@@ -256,7 +255,7 @@ loss_model = 'categorical_crossentropy'
 metrics_to_be_used = ["accuracy"]
 
 model.compile(optimizer=optimizer,loss=loss_model, metrics=metrics_to_be_used)
-model.summary()
+
 
 from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.1,
@@ -274,6 +273,8 @@ history = model.fit(x=x_train,y=y_train,
                     callbacks=[reduce_lr,EarlyStoppingMonitory])
 
 variables_for_plot = ["loss"] + metrics_to_be_used
+
+model.summary()
 
 for var in variables_for_plot:
 

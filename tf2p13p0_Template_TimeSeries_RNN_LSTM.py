@@ -217,11 +217,11 @@ model_cnn_lstm = tf.keras.Sequential([
 
 
 
-model = model_dnn
+#model = model_dnn
 #model = model_cnn
 #model = model_rnn
 #model = model_lstm
-#model = model_cnn_lstm
+model = model_cnn_lstm
 
 # exponential decay
 initial_learning_rate = 0.00001

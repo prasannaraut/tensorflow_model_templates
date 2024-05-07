@@ -45,6 +45,7 @@
 #   Trailing moving average: calculate average using most recent n data points
 
 
+# Lambda Layer: The Lambda layer exists so that arbitrary expressions can be used as a Layer when constructing Sequential and Functional API models
 
 
 #load libraries
@@ -290,10 +291,10 @@ x_valid_processed = windowd_dataset(x_valid, window_size =window_size, batch_siz
 # Building model
 
 model = tf.keras.Sequential([
-    tf.keras.layers.Dense(20, activation='relu', input_shape=[window_size]),
-    tf.keras.layers.Dropout(0.3),
-    tf.keras.layers.Dense(12, activation='relu'),
-    tf.keras.layers.Dropout(0.5),
+    tf.keras.layers.Dense(10, activation='relu', input_shape=[window_size]),
+    #tf.keras.layers.Dropout(0.3),
+    tf.keras.layers.Dense(10, activation='relu'),
+    #tf.keras.layers.Dropout(0.5),
     #tf.keras.layers.Dense(512, activation='relu'),
     #tf.keras.layers.Dense(64, activation='relu'),
    tf.keras.layers.Dense(1,  activation='relu'),
@@ -307,8 +308,8 @@ lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
     decay_rate=0.96,
     staircase=True)
 
-optimizer=tf.keras.optimizers.Adam(learning_rate = 0.001)
-#optimizer=tf.keras.optimizers.SGD(learning_rate=0.001, momentum=0.0)
+#optimizer=tf.keras.optimizers.Adam(learning_rate = 0.0001)
+optimizer=tf.keras.optimizers.SGD(learning_rate=0.000001, momentum=0.9)
 
 #loss_model = "mean_absolute_percentage_error"
 #loss_model = 'mean_absolute_error'

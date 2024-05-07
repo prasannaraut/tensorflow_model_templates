@@ -4,6 +4,9 @@
 #scipy==1.10.1
 #tensorflow==2.13.0
 #tensorflow-datasets==4.9.2
+#matplotlib=3.7.2
+#scikit-learn=1.3.0
+#nltk=3.8.1
 
 
 # Characteristics of time series

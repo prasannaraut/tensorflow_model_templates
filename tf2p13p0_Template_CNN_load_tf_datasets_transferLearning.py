@@ -137,7 +137,7 @@ mobilenet = MobileNet(weights='imagenet', include_top=False, input_shape=(224, 2
 inceptionv3 = InceptionV3(weights='imagenet', include_top=False, input_shape=(224, 224, 3))
 
 
-imported = vgg16
+imported = inceptionv3
 
 # Freeze all the layers in  Model
 for layer in imported.layers:

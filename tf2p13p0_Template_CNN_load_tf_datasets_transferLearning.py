@@ -198,7 +198,7 @@ EarlyStoppingMonitory = EarlyStopping(patience=4)
 history = model.fit(x=train_data,
                     validation_data=valid_data,
                     #validation_split=0.2,
-                    epochs = 1,
+                    epochs = 3,
                     shuffle = True,
                     callbacks=[reduce_lr,EarlyStoppingMonitory])
 

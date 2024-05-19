@@ -1,2 +1,9 @@
 contains links for useful code snipets
 https://www.kaggle.com/discussions/general/315927
+
+Questions for practice
+https://github.com/ak-org/TFDevCert/blob/master/study_guide.md
+
+Sharing experience of how he prepared for the exam
+https://jdluther.medium.com/the-tensorflow-developer-certificate-exam-zero-to-certified-a-firsthand-experience-2e18a13de933
+

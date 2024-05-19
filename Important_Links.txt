@@ -1,0 +1,2 @@
+contains links for useful code snipets
+https://www.kaggle.com/discussions/general/315927

@@ -1,4 +1,14 @@
 # Book: Tensorflow developer certificate exam practice tests 2024 made easy (https://read.amazon.in/?asin=B0CV19NDD1&ref_=kwl_kr_iv_rec_1)
+# Images : https://www.kaggle.com/datasets/shreyapmaher/fruits-dataset-images
+# Folder structure
+#   datasets
+#       apple-banana
+#           train
+#               apple
+#               banana
+#           validation
+#               apple
+#               banana
 
 # color model
 import os
@@ -21,8 +31,10 @@ def rescale(image,label):
     return image, label
 
 def binary_model():
-    data_folder = 'apple-banana'
+    data_folder = '\datasets\apple-banana'
+    # manually download data from https://www.kaggle.com/datasets/shreyapmaher/fruits-dataset-images
 
+    '''
     if not os.path.exists(data_folder):
         dataset_url = 'http://dl.dropboxusercontent.com/sc'
         local_zip = 'apple-banana.zip'
@@ -30,23 +42,28 @@ def binary_model():
         zip_ref = zipfile.ZipFile(file=local_zip, mode='r')
         zip_ref.extractall(data_folder)
         zip_ref.close()
-
-########### define image size and batch sizee
-img_size = (0,0) ########################################################################################### Add code here
-batch_size = 32
-
-train_ds = image_dataset_from_directory(directory="apple-banana/train/", seed=1, image_size=img_size, batch_size=batch_size)
-val_ds = image_dataset_from_directory(directory="apple-banana/validation/", seed=1, image_size=img_size, batch_size=batch_size)
-
-# rescale image
-train_ds = train_ds.map(rescale, num_parallel_calls = AUTOTUNE)
-val_ds = val_ds.map(rescale, num_parallel_calls = AUTOTUNE)
-
-train_ds = train_ds.cache().shuffle(1000).prefetch()
-val_ds = val_ds.cache().prefetch()
+    '''
 
 
-def my_model():
+    ########### define image size and batch sizee
+    img_size = (512,512) ########################################################################################### Add code here
+    batch_size = 4
+    n_classes = 2
+
+    train_ds = image_dataset_from_directory(directory="datasets/apple-banana/train", seed=1, image_size=img_size, batch_size=batch_size, validation_split=0.2,
+    subset='training')
+    val_ds = image_dataset_from_directory(directory="datasets/apple-banana/validation/", seed=1, image_size=img_size, batch_size=batch_size, validation_split=0.2,
+    subset='training')
+
+    # rescale image
+    train_ds = train_ds.map(rescale, num_parallel_calls = AUTOTUNE)
+    val_ds = val_ds.map(rescale, num_parallel_calls = AUTOTUNE)
+
+    train_ds = train_ds.cache().shuffle(1000).prefetch(buffer_size=4)
+    val_ds = val_ds.cache().prefetch(buffer_size=4)
+
+
+    #create model
 
     data_augmentation = tf.keras.Sequential(
         [
@@ -56,25 +73,25 @@ def my_model():
             tf.keras.layers.RandomContrast(0.2),
             tf.keras.layers.RandomHeight(0.2),
             tf.keras.layers.RandomWidth(0.2),
-            tf.keras.layers.Resizing(img_height_new, img_width_new),
+            tf.keras.layers.Resizing(img_size[0], img_size[1]),
         ]
     )
 
     model_CNN_scratch = tf.keras.models.Sequential([
         data_augmentation,
-        tf.keras.layers.Rescaling(1. / 1, input_shape=(img_height_new, img_height_new)),
+        tf.keras.layers.Rescaling(1. / 255, input_shape=(img_size[0], img_size[1], 3)),
         tf.keras.layers.Conv2D(64, kernel_size=(3, 3), activation='relu', padding='same'),
         tf.keras.layers.MaxPooling2D(pool_size=(2, 2)),
         tf.keras.layers.Conv2D(32, kernel_size=(3, 3), activation='relu', padding='same'),
         tf.keras.layers.AveragePooling2D(pool_size=(2, 2)),
         tf.keras.layers.Flatten(),
         tf.keras.layers.Dense(256, activation='relu'),
-        tf.keras.layers.Dense(n_classes, activation='softmax')
+        tf.keras.layers.Dense(1, activation='sigmoid')
     ])
-    '''
-    vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(img_height_new, img_width_new, 1))
-    mobilenet = MobileNet(weights='imagenet', include_top=False, input_shape=(img_height_new, img_width_new, 1))
-    inceptionv3 = InceptionV3(weights='imagenet', include_top=False, input_shape=(img_height_new, img_width_new, 1))
+
+    vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(img_size[0], img_size[1], 3))
+    mobilenet = MobileNet(weights='imagenet', include_top=False, input_shape=(img_size[0], img_size[1], 3))
+    inceptionv3 = InceptionV3(weights='imagenet', include_top=False, input_shape=(img_size[0], img_size[1], 3))
 
     imported = inceptionv3
 
@@ -89,16 +106,16 @@ def my_model():
     # create a new model by adding on top of vgg16
     imported_newModel = tf.keras.models.Sequential()
     imported_newModel.add(data_augmentation)
-    imported_newModel.add(tf.keras.layers.Rescaling(1. / 255, input_shape=(img_width_new, img_width_new, 1)))
+    imported_newModel.add(tf.keras.layers.Rescaling(1. / 255, input_shape=(img_size[0], img_size[1], 3)))
     imported_newModel.add(imported)
     imported_newModel.add(tf.keras.layers.Flatten())
     imported_newModel.add(tf.keras.layers.Dense(1024, activation='relu'))
     imported_newModel.add(tf.keras.layers.Dropout(0.5))
-    imported_newModel.add(tf.keras.layers.Dense(n_classes, activation='softmax'))
-    '''
+    imported_newModel.add(tf.keras.layers.Dense(1, activation='sigmoid'))
 
-    # model = imported_newModel
-    model = model_CNN_scratch
+
+    model = imported_newModel
+    #model = model_CNN_scratch
 
     initial_learning_rate = 0.1
     lr_schedule = tf.keras.optimizers.schedules.ExponentialDecay(
@@ -110,13 +127,12 @@ def my_model():
     optimizer = tf.keras.optimizers.Adam(learning_rate=0.0001)
     # optimizer=tf.keras.optimizers.SGD(learning_rate=0.001, momentum=0.0)
 
-    # loss_model = "binary_crossentropy"
-    # loss_model = 'categorical_crossentropy'
+    loss_model = "binary_crossentropy"
+    #loss_model = 'categorical_crossentropy'
     # loss_model = 'mean_absolute_error'
 
     # loss_model=tf.keras.losses.categorical_crossentropy # use if output is one hot encoder
-    loss_model = tf.keras.losses.SparseCategoricalCrossentropy(
-        from_logits=True),  # use if output is single digit specifying the class name
+    #loss_model = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=True),  # use if output is single digit specifying the class name
 
     metrics_to_be_used = ["accuracy"]
 
@@ -130,15 +146,17 @@ def my_model():
 
     # y=y_train,
     # validation_data = (x_test,y_test),
-    history = model.fit(x=train_data, y=train_labels,
-                        validation_data=(x_test, y_test),
+    history = model.fit(x=train_ds,
+                        validation_data=val_ds,
                         # validation_split=0.2,
                         epochs=3,
                         shuffle=True,
                         callbacks=[reduce_lr, EarlyStoppingMonitory])
 
     print(model.summary())
+    summarize_model(model)
 
+    '''
     variables_for_plot = ["loss"] + metrics_to_be_used
 
     for var in variables_for_plot:
@@ -153,13 +171,19 @@ def my_model():
         plt.ylabel(var)
         plt.legend()
         plt.show()
+    '''
 
     return model
 
 
+def summarize_model(model):
+    model.summary()
+    input_shape=model.layers[0].input_shape
+    print(f'Input shape: {input_shape}')
+
 if __name__ == '__main__':
-    my_model = my_model()
-    filepath = "grayscale_model_1.h5"
+    my_model = binary_model()
+    filepath = "binary_color_model.h5"
     my_model.save(filepath)
 
     saved_model = load_model(filepath)

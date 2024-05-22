@@ -1,3 +1,5 @@
+# Book: Tensorflow developer certificate exam practice tests 2024 made easy (https://read.amazon.in/?asin=B0CV19NDD1&ref_=kwl_kr_iv_rec_1)
+
 # color model
 import os
 import zipfile

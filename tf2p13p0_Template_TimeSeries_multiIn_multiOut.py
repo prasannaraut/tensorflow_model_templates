@@ -278,6 +278,7 @@ train_std = train_df.std()
 train_df = (train_df - train_mean) / train_std
 valid_df = (valid_df - train_mean) / train_std
 test_df = (test_df - train_mean) / train_std
+future_prediction_df = (future_prediction_df - train_mean) / train_std
 
 
 # Process the data

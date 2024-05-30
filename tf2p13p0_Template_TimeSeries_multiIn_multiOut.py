@@ -366,10 +366,5 @@ w1.plot_valid_data_withPredictions(valid_output_predictions)
 w1.plot_test_data_withPredictions(test_output_predictions)
 w1.plot_future_predictions(future_predictions, train_mean, train_std)
 
-
-
-# add functionality to plot valid dataset predictions on actual values (one plot per feature)
-# add functionality to plot test dataset predictions on actual values (one plot per feature)
-# add normalization either in model or in the preprocessing of data
-# add functionality to specify inputs as past_points_toConsider, future_points_toPredict, gap
-# validate that the moodel is working properly
+print("########################## Final Prediction is##########################")
+print(future_predictions)
